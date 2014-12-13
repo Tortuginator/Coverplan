@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="assets/css/theme.css" rel="stylesheet">
+<script src="assets/js/jquery-2.1.1.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="assets/js/RenderEngine.js"></script>
+<script>RenderJSON_Covers("json/13-12-2014.json");</script>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -20,7 +22,8 @@
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Coverplan 10.12.2014</div>
-				<table class="table table-striped table-hover">
+			<div class="alert alert-warning" role="alert" id="loadingR">Loading</div>
+				<table class="table table-striped table-hover" id="tablecontent">
 					<thead>
 						<tr>
 							<th>Lesson</th>
@@ -33,27 +36,8 @@
 							<th>Room</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th>6.</th>
-							<th>G-11A</th>
-							<th><span class="label label-danger">Cancled</span></th>
-							<th>GÖE</th>
-							<th><span class="label label-default">No Cover</span></th>
-							<th>German</th>
-							<th>Work assigned (Mail)</th>
-							<th></th>
-						</tr>
-						<tr>
-							<th>6.</th>
-							<th>G-11A</th>
-							<th><span class="label label-warning">Covered</span></th>
-							<th>GÖE</th>
-							<th>SCL</th>
-							<th>German</th>
-							<th>Work assigned (Mail)</th>
-							<th></th>
-						</tr>
+					<tbody id="coverlesson">
+						<!--JAVASCRIPT ENGINE-->
 					</tbody>
 				</table>
 			</div>
