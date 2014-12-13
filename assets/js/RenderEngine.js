@@ -21,14 +21,19 @@ function CoverRENDER(CoverJSON){
 				//STATEMENT SELECTOR
 
 				CoverJSON.Covers[i].Event = GetEvent(CoverJSON.Covers[i].Event);
+				CoverJSON.Covers[i].Replacement = GetReplacement(CoverJSON.Covers[i].Replacement);
+				console.log(CoverJSON.Covers[i].Event);
+				//SUB STATEMENT SELECTOR
 				
+				if (CoverJSON.Covers[i].Replacement === '<span class="label label-default">No Cover</span>'){CoverJSON.Covers[i].Event = '<span class="label label-danger">Cancled</span>';}
 				//RENDER Content
+				console.log(CoverJSON.Covers[i].Event);
 				rendered =  rendered + '<tr>'+
 							'		<th>' + CoverJSON.Covers[i].Lesson + '.</th>'+
 							'		<th>' + CoverJSON.Covers[i].Class + '</th>'+
 							'		<th>' + CoverJSON.Covers[i].Event + '</th>'+
 							'		<th>' + CoverJSON.Covers[i].Absent + '</th>'+
-							'		<th><span class="label label-default">' + CoverJSON.Covers[i].Replacement + '</span></th>'+
+							'		<th data-toggle="tooltip" data-placement="top" title="Tooltip on top">' + CoverJSON.Covers[i].Replacement + '</th>'+
 							'		<th>' + CoverJSON.Covers[i].Subject + '</th>' +
 							'		<th>' + CoverJSON.Covers[i].Comment + '</th>' +
 							'		<th>' + CoverJSON.Covers[i].Room + '</th>'+
@@ -43,19 +48,26 @@ function CoverRENDER(CoverJSON){
 	}
 }
 function GetEvent(Event){
+	Event = Event.toLowerCase();
 	switch (Event){
-			case "Cancled":
+			case "cancled":
 				Event = '<span class="label label-danger">' + Event + '</span>';
 				break;
-			case "Covered":
+			case "covered":
 				Event = '<span class="label label-warning">' + Event + '</span>';
 				break;
-			case "Moved":
+			case "moved":
 				Event = '<span class="label label-primary">' + Event + '</span>';
 				break;
-			case "Switched":
+			case "switched":
 				Event = '<span class="label label-success">' + Event + '</span>';
 				break;
 	}
 	return Event;
+}
+function GetReplacement(Replacement){
+	if (Replacement == 'COV1' || Replacement == 'COV2' || Replacement == 'COV3' || Replacement == 'COV4'|| Replacement == 'COV5'||Replacement == 'NOCOV'){
+		Replacement = '<span class="label label-default">No Cover</span>';
+	}
+	return Replacement;
 }
