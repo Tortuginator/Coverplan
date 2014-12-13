@@ -3,8 +3,17 @@ function RenderJSON_Covers(URL){
 
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var JSON_A = JSON.parse(xmlhttp.responseText);
-			CoverRENDER(JSON_A);
+			if (xmlhttp.responseText===''){
+				if (document.getElementById("loadingR") !== null){document.getElementById("loadingR").remove();}
+				document.getElementById("tablecontent").innerHTML = '<div class="alert alert-success" role="alert" style="margin-bottom:0px">No covers for Today</div>';
+			}else{
+				var JSON_A = JSON.parse(xmlhttp.responseText);
+				CoverRENDER(JSON_A);
+			}
+			
+		}else if(xmlhttp.status == 404){
+			if (document.getElementById("loadingR") !== null){document.getElementById("loadingR").remove();}
+			document.getElementById("tablecontent").innerHTML = '<div class="alert alert-danger" role="alert" style="margin-bottom:0px">No Covers found</div>';
 		}
 	}
 
@@ -12,31 +21,31 @@ function RenderJSON_Covers(URL){
 	xmlhttp.send();
 }
 function CoverRENDER(CoverJSON){
+	CoverJSON = ArraySort(CoverJSON);
 	document.getElementById("loadingR").remove();
 	var rendered = "";
-	if (CoverJSON.Covers.length === 0){
-		document.getElementById("tablecontent").innerHTML = '<div class="alert alert-danger" role="alert" style="margin-bottom:0px;"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>No Covers found</div>';
+	if (CoverJSON.length === 0 || CoverJSON.length === undefined){
+		document.getElementById("tablecontent").innerHTML = '<div class="alert alert-success" role="alert" style="margin-bottom:0px">No covers for Today</div>';
 	}else{
-			for (var i = 0; i < CoverJSON.Covers.length; i++){
+			for (var i = 0; i < CoverJSON.length; i++){
 				//STATEMENT SELECTOR
 
-				CoverJSON.Covers[i].Event = GetEvent(CoverJSON.Covers[i].Event);
-				CoverJSON.Covers[i].Replacement = GetReplacement(CoverJSON.Covers[i].Replacement);
-				console.log(CoverJSON.Covers[i].Event);
-				//SUB STATEMENT SELECTOR
+				CoverJSON[i].Event = GetEvent(CoverJSON[i].Event);
+				CoverJSON[i].Replacement = GetReplacement(CoverJSON[i].Replacement);
 				
-				if (CoverJSON.Covers[i].Replacement === '<span class="label label-default">No Cover</span>'){CoverJSON.Covers[i].Event = '<span class="label label-danger">Cancled</span>';}
+				//SUB STATEMENT SELECTOR
+				if (CoverJSON[i].Replacement === '<span class="label label-default">No Cover</span>'){CoverJSON[i].Event = '<span class="label label-danger">cancled</span>';}
+				
 				//RENDER Content
-				console.log(CoverJSON.Covers[i].Event);
 				rendered =  rendered + '<tr>'+
-							'		<th>' + CoverJSON.Covers[i].Lesson + '.</th>'+
-							'		<th>' + CoverJSON.Covers[i].Class + '</th>'+
-							'		<th>' + CoverJSON.Covers[i].Event + '</th>'+
-							'		<th>' + CoverJSON.Covers[i].Absent + '</th>'+
-							'		<th data-toggle="tooltip" data-placement="top" title="Tooltip on top">' + CoverJSON.Covers[i].Replacement + '</th>'+
-							'		<th>' + CoverJSON.Covers[i].Subject + '</th>' +
-							'		<th>' + CoverJSON.Covers[i].Comment + '</th>' +
-							'		<th>' + CoverJSON.Covers[i].Room + '</th>'+
+							'		<th>' + CoverJSON[i].Lesson + '.</th>'+
+							'		<th>' + CoverJSON[i].Class + '</th>'+
+							'		<th>' + CoverJSON[i].Event + '</th>'+
+							'		<th>' + CoverJSON[i].Absent + '</th>'+
+							'		<th>' + CoverJSON[i].Replacement + '</th>'+
+							'		<th>' + CoverJSON[i].Subject + '</th>' +
+							'		<th>' + CoverJSON[i].Comment + '</th>' +
+							'		<th>' + CoverJSON[i].Room + '</th>'+
 							'	</tr>';
 			}
 		
@@ -46,6 +55,20 @@ function CoverRENDER(CoverJSON){
 			document.getElementById("coverlesson").innerHTML = rendered;
 		}
 	}
+}
+function ArraySort(a){
+	var TMP_array = [];
+	var TMP_index = -1;
+	//Sort for Lesson Number
+	for (var i = 0; i < 10; i++){
+		for (var p = 0; p < a.Covers.length; p++){
+			if (a.Covers[p].Lesson === i){
+				TMP_index = TMP_index+1;
+				TMP_array[TMP_index] = a.Covers[p];
+			}
+		}
+	}
+	return TMP_array;
 }
 function GetEvent(Event){
 	Event = Event.toLowerCase();

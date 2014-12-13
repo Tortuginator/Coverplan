@@ -1,4 +1,5 @@
 {"Covers":[
-	{"Lesson":"6","Class":"G-11A","Event":"Switched","Absent":"GOE","Replacement":"NOCOV","Subject":"German","Comment":"Work Assigned","Room":""},
-	{"Lesson":"6","Class":"G-11A","Event":"Moved","Absent":"GOE","Replacement":"PCL","Subject":"German","Comment":"Work Assigned","Room":""}
+	{"Lesson":8,"Class":"G-11A","Event":"Switched","Absent":"GOE","Replacement":"REK","Subject":"German","Comment":"Switched with Lesson 5.","Room":""},
+	{"Lesson":6,"Class":"G-11A","Event":"Moved","Absent":"KUN","Replacement":"KUN","Subject":"German","Comment":"Other room occupied","Room":"C203"},
+	{"Lesson":7,"Class":"G-11A","Event":"Cancled","Absent":"RPL","Replacement":"NOCOV","Subject":"German","Comment":"Work Assigned","Room":""}
 ]}
